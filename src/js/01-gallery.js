@@ -1,17 +1,22 @@
 // Описаний в документації
 import SimpleLightbox from 'simplelightbox';
-// import SimpleLightbox from 'simplelightbox/dist/simple-lightbox.esm';
-
 // Додатковий імпорт стилів
 import 'simplelightbox/dist/simple-lightbox.min.css';
-// Add imports above this line
-
+// import of galleryItems
 import { galleryItems } from './gallery-items';
-// Change code below this line
 
 console.log(galleryItems);
+// Change code below this line
+
 const parentItemsRef = document.body.querySelector('.gallery');
-console.log('parentItemsRef:', parentItemsRef);
+// console.log('parentItemsRef:', parentItemsRef);
+
+galleryItemsMarkup(galleryItems, parentItemsRef);
+
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
 
 function galleryItemsMarkup(arrItems, parentRef) {
   const itemsMarkup = arrItems
@@ -26,12 +31,5 @@ function galleryItemsMarkup(arrItems, parentRef) {
 
   return (parentRef.innerHTML = itemsMarkup);
 }
-
-galleryItemsMarkup(galleryItems, parentItemsRef);
-
-const lightbox = new SimpleLightbox('.gallery a', {
-  captionsData: 'alt',
-  captionDelay: 250,
-});
 
 console.log(lightbox);

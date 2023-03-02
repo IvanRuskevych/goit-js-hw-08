@@ -18,36 +18,26 @@
 import Vimeo from '@vimeo/player';
 import Throttle from 'lodash.throttle';
 
+import { save, load } from '../js/local_storage';
+
 const iframe = document.querySelector('iframe');
 const player = new Vimeo(iframe);
-// console.log('player:', player);
 const LOCALSTORAGE_KEY = 'videoplayer-current-time';
-
-const save = (key, value) => {
-  try {
-    const serializedState = JSON.stringify(value);
-    localStorage.setItem(key, serializedState);
-  } catch (error) {
-    console.error('Set state error: ', error.message);
-  }
-};
-
-const load = key => {
-  try {
-    const serializedState = localStorage.getItem(key);
-    return serializedState === null ? undefined : JSON.parse(serializedState);
-  } catch (error) {
-    console.error('Set state error: ', error.message);
-  }
-};
 
 player.on(
   'timeupdate',
   Throttle(function ({ seconds }) {
     save(LOCALSTORAGE_KEY, seconds);
-
-    console.log('sec: ', seconds, ' minute: ', Number(seconds / 60).toFixed(1));
+    // console.log('sec: ', seconds, ' minute: ', Number(seconds / 60).toFixed(1));
   }, 1000)
 );
 
-player.setCurrentTime(load(LOCALSTORAGE_KEY));
+load(LOCALSTORAGE_KEY) === undefined
+  ? player.setCurrentTime(0)
+  : player.setCurrentTime(load(LOCALSTORAGE_KEY));
+
+// if (load(LOCALSTORAGE_KEY) === undefined) {
+//   player.setCurrentTime(0);
+// } else {
+//   player.setCurrentTime(load(LOCALSTORAGE_KEY));
+// }
