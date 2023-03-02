@@ -18,20 +18,15 @@ const emailRef = document.querySelector('[name="email"]');
 // console.log('emailRef:', emailRef);
 const messageRef = document.querySelector('[name="message"]');
 // console.log('messageRef:', messageRef);
-
 const LOCALSTORAGE_KEY = 'feedback-form-state';
+
 let feedbackData = {
   email: '',
   message: '',
 };
 
 formRef.addEventListener('input', Throttle(updateFeedbackData, 500));
-
-function updateFeedbackData(e) {
-  feedbackData[e.target.name] = e.target.value;
-  save(LOCALSTORAGE_KEY, feedbackData);
-  //   console.log(e.target.name, ':', e.target.value);
-}
+formRef.addEventListener('submit', onFormSubmit);
 
 if (load(LOCALSTORAGE_KEY) !== undefined) {
   feedbackData = load(LOCALSTORAGE_KEY);
@@ -40,11 +35,17 @@ if (load(LOCALSTORAGE_KEY) !== undefined) {
   messageRef.value = feedbackData.message;
 }
 
-formRef.addEventListener('submit', onFormSubmit);
+function updateFeedbackData(e) {
+  feedbackData[e.target.name] = e.target.value;
+  save(LOCALSTORAGE_KEY, feedbackData);
+  //   console.log(e.target.name, ':', e.target.value);
+}
 
 function onFormSubmit(e) {
   e.preventDefault();
-  console.log(localStorage[LOCALSTORAGE_KEY]);
+
+  console.log(feedbackData);
+
   formRef.reset();
   localStorage.clear();
 }

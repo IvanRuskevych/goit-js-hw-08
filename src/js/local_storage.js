@@ -1,3 +1,4 @@
+// method "save" for saving items to localStorage
 export const save = (key, value) => {
   try {
     const serializedState = JSON.stringify(value);
@@ -7,6 +8,7 @@ export const save = (key, value) => {
   }
 };
 
+// method "load" for getting items from localStorage
 export const load = key => {
   try {
     const serializedState = localStorage.getItem(key);
