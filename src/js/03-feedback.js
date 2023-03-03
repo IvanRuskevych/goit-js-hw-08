@@ -10,7 +10,7 @@
 //      Для цього додай до проекту і використовуй бібліотеку lodash.throttle.
 
 import { save, load } from '../js/local_storage';
-import Throttle from 'lodash.throttle';
+import throttle from 'lodash.throttle';
 
 const formRef = document.querySelector('.feedback-form');
 // console.log('formRef:', formRef);
@@ -25,7 +25,7 @@ let feedbackData = {
   message: '',
 };
 
-formRef.addEventListener('input', Throttle(updateFeedbackData, 500));
+formRef.addEventListener('input', throttle(updateFeedbackData, 500));
 formRef.addEventListener('submit', onFormSubmit);
 
 if (load(LOCALSTORAGE_KEY) !== undefined) {
