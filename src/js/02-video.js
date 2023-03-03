@@ -16,7 +16,7 @@
 //      і зроби так, щоб час відтворення оновлювався у сховищі не частіше, ніж раз на секунду.
 
 import Vimeo from '@vimeo/player';
-import Throttle from 'lodash.throttle';
+import throttle from 'lodash.throttle';
 
 import { save, load } from '../js/local_storage';
 
@@ -26,7 +26,7 @@ const LOCALSTORAGE_KEY = 'videoplayer-current-time';
 
 player.on(
   'timeupdate',
-  Throttle(function ({ seconds }) {
+  throttle(function ({ seconds }) {
     save(LOCALSTORAGE_KEY, seconds);
     // console.log('sec: ', seconds, ' minute: ', Number(seconds / 60).toFixed(1));
   }, 1000)
